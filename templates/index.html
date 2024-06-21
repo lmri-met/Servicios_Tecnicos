@@ -1,0 +1,599 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario con Pestañas en Flask y Bootstrap</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!-- Estilos personalizados -->
+  <style>
+    .is-invalid {
+      border-color: #dc3545; // Rojo para campos inválidos
+    }
+    .banner {
+      background-color: #d4edda; /* Verde lima */
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    .bordered-group {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+    .bordered-group3 {
+    border: 3px solid #38e738; /* Aumenta el grosor del borde */
+    padding: 15px; /* Añade un poco de espacio dentro del borde */
+    margin-top: 10px; /* Opcional: añade un margen para separar de otros elementos */
+}
+    .half-width {
+      width: 50%;
+    }
+    .inline-group {
+      display: flex;
+      justify-content: space-between;
+    }
+    .quarter-width {
+      width: 25%;
+    }
+    .three-quarters-width {
+      width: 75%;
+    }
+    /* Estilo para las pestañas */
+    .nav-tabs .nav-link.active {
+      background-color: #cce5ff; /* Fondo azul activo */
+    }
+    .nav-tabs .nav-link.disabled {
+      background-color: #f8f9fa; /* Fondo gris para pestañas deshabilitadas */
+    }
+  </style>
+</head>
+<body>
+  <!-- Banner -->
+  <div class="container-fluid banner">
+    <h2 class="text-center text-dark">LABORATORIO DE METROLOGÍA DE RADIACIONES IONIZANTES (LMRI)</h2>
+    <h2 class="text-center text-dark">Servicios técnicos</h2>
+  </div>
+
+  <div class="container mt-3">
+    <h4 class="mb-4">Formulario con Pestañas</h4>
+    <form id="dynamic-form" method="POST" action="/">
+      <!-- Pestañas -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="datos-generales-tab" data-toggle="tab" href="#datos-generales" role="tab" aria-controls="datos-generales" aria-selected="true">Datos Generales</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" id="equipos-tab" data-toggle="tab" href="#equipos" role="tab" aria-controls="equipos" aria-selected="false">Equipos / Dosímetros / Radionucleidos</a>
+        </li>
+      </ul>
+
+      <!-- Contenido de las pestañas -->
+      <div class="tab-content mt-3" id="myTabContent">
+        <!-- Pestaña de Datos Generales -->
+        <div class="tab-pane fade show active" id="datos-generales" role="tabpanel" aria-labelledby="datos-generales-tab">
+          <div class="form-group bordered-group">
+            <label for="numped">CONSIGNE SU NÚMERO DE PEDIDO (En caso de existir)</label>
+            <input type="text" class="form-control half-width" id="numped" name="numped" value="">
+          </div>
+          <h4>PERSONA DE CONTACTO</h4>
+          <div class="form-group bordered-group">
+            <label for="namecl">Nombre completo</label>
+            <input type="text" class="form-control" id="namecl" name="namecl" value="">
+            <div class="inline-group">
+              <div class="quarter-width">
+                <label for="telcl">Teléfono</label>
+                <input type="text" class="form-control" id="telcl" name="telcl" value="">
+              </div>
+              <div class="three-quarters-width">
+                <label for="mailcl">Correo</label>
+                <input type="text" class="form-control" id="mailcl" name="mailcl" value="">
+              </div>
+            </div>
+          </div>
+          <h4>REPRESENTANTE DE LA ENTIDAD</h4>
+          <div class="form-group bordered-group">
+            <label for="namere">Nombre completo</label>
+            <input type="text" class="form-control" id="namere" name="namere" value="">
+            <h6>Apoderamiento para la firma del contrato</h6>
+            <div class="inline-group">
+              <div class="three-quarters-width">
+                <label for="poderre">Poder notarial</label>
+                <input type="text" class="form-control" id="poderre" name="poderre" value="">
+              </div>
+              <div class="quarter-width">
+                <label for="fechare">Fecha</label>
+                <input type="date" class="form-control" id="fechare" name="fechare" value="">
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="half-width">
+                <label for="notariore">Nombre notario</label>
+                <input type="text" class="form-control" id="notariore" name="notariore" value="">
+              </div>
+              <div class="half-width">
+                <label for="cargore">Cargo que ostenta</label>
+                <input type="text" class="form-control" id="cargore" name="cargore" value="">
+              </div>
+            </div>
+          </div>
+          <h4>DATOS DE FACTURACIÓN</h4>
+          <div class="form-group bordered-group">
+            <p><h6>Datos fiscales de la entidad</h6></p>
+            <label for="facdeno">Denominación</label>
+            <input type="text" class="form-control" id="facdeno" name="facdeno" value="">
+            <label for="facdir">Dirección</label>
+            <input type="text" class="form-control" id="facdir" name="facdir" value="">
+              <div class="quarter-width">
+                <label for="faccif">Número del CIF</label>
+                <input type="text" class="form-control quarter-width" id="faccif" name="faccif" value="">
+              </div>
+          </div>   
+          <div class="form-group bordered-group">
+            <p><h6>Si el solicitante es una institución pública consigne los siguientes códigos, 
+            necesarios para el Registro Contable de Facturas (RCF):</h6></p>
+            <label for="facog">Órgano gestor</label>
+            <input type="text" class="form-control" id="facog" name="facog" value="">
+            <label for="facoc">Órgano contable</label>
+            <input type="text" class="form-control" id="facoc" name="facoc" value="">
+            <label for="facut">Unidad tramitadora</label>
+            <input type="text" class="form-control" id="facut" name="facut" value="">
+            <label for="facop">Órgano proponente</label>
+            <input type="text" class="form-control" id="facop" name="facop" value="">
+          </div>
+          <div class="form-group bordered-group">
+            <p><h6>Envío de la factura:</h6></p>
+            <label for="facpc">Persona de contacto</label>
+            <input type="text" class="form-control" id="facpc" name="facpc" value="">           
+            <div class="inline-group">
+              <div class="quarter-width">
+                <label for="telcl">Teléfono</label>
+                <input type="text" class="form-control" id="telcl" name="telcl" value="">
+              </div>
+              <div class="three-quarters-width">
+                <label for="mailcl">Correo</label>
+                <input type="text" class="form-control" id="mailcl" name="mailcl" value="">
+              </div>
+            </div>
+          </div>
+
+          <h4>DATOS PARA LA DEVOLUCIÓN DE LOS EQUIPOS O ENTREGA DE FUENTES RADIACTIVAS</h4>
+          <div class="form-group bordered-group">
+              <label for="cerdevnamedeno">A la atención de:</label>
+              <input type="text" class="form-control" id="devname" name="cerdendevnameo" value="">
+              <label for="cerdir">Dirección completa (Calle, edificio, despacho, etc.):</label>
+              <p><h9>(Esta dirección estará escrita en el paquete de envío del equipo y deberá 
+              coincidir con la que tenga el transportista)</h9></p>
+              <input type="text" class="form-control" id="cerdir" name="cerdir" value="">
+              <div class="inline-group">
+                  <div class="quarter-width">
+                      <label for="telcldevtel">Teléfono</label>
+                      <input type="text" class="form-control" id="devtel" name="devtel" value="">
+                  </div>
+                  <div class="three-quarters-width">
+                      <label for="devmail">Correo</label>
+                      <input type="text" class="form-control" id="devmail" name="devmail" value="">
+                  </div>
+              </div>
+          </div>
+
+          <!-- Botón para activar la pestaña de Equipos -->
+          <button id="activar-equipos" type="button" class="btn btn-primary mt-2">Siguiente</button>
+        </div>
+
+<!-- Pestaña de Equipos / Dosímetros / Radionucleidos -->
+<div class="tab-pane fade" id="equipos" role="tabpanel" aria-labelledby="equipos-tab">
+    <h4>Selección de Equipos / Dosímetros / Radionucleidos</h4>
+    <div class="form-group bordered-group3">
+      <div class="row">
+        <!-- Selector para CALIBRACIÓN -->
+        <div class="col-md-4">
+          <label for="tipo-calibracion">CALIBRACIÓN</label>
+          <select class="form-control" id="tipo-calibracion" name="tipo-calibracion">
+            <option value="op0c">Elige opción</option>
+            <option value="op1c">RADIACIÓN GAMMA EN NIVELES DE PROTECCIÓN (Cs-137 / Co-60)</option>
+            <option value="op2c">RADIACIÓN RAYOS X (L, N, W, RQ#)</option>
+            <option value="op3c">RADIACIÓN BETA (Kr-85 / Sr-90/Y-90 / Pm-147)</option>
+            <option value="op4c">RADIACIÓN NEUTRÓNICA (Cf-252 / Am-241/Be)</option>
+            <option value="op5c">RADIACIÓN GAMMA EN NIVELES DE TERAPIA (Co-60)</option>
+            <option value="op6c">MONITORES DE CONTAMINACIÓN</option>
+            <option value="op7c">ACTIVÍMETROS</option>
+          </select>
+        </div>
+        <!-- Selector para DOSIS -->
+        <div class="col-md-4">
+            <label for="tipo-dosis">ASIGNACIÓN DE DOSIS</label>
+            <select class="form-control" id="tipo-dosis" name="tipo-dosis">
+            <option value="op0d">Elige opción</option>
+            <option value="op1d">RADIACIÓN GAMMA EN NIVELES DE PROTECCIÓN (Cs-137 / Co-60)</option>
+            <option value="op2d">RADIACIÓN RAYOS X (L, N, W)</option>
+            <option value="op3d">RADIACIÓN BETA (Kr-85 / Sr-90/Y-90 / Pm-147)</option>
+            <option value="op4d">RADIACIÓN NEUTRÓNICA (Cf-252 / Am-241/Be)</option>
+            <option value="op5d">RADIACIÓN GAMMA EN NIVELES DE TERAPIA (Co-60)</option>
+            </select>
+        </div>
+        <!-- Selector para RADIONUCLEIDOS -->
+        <div class="col-md-4">
+            <label for="tipo-rn">FUENTES RADIACTIVAS</label>
+            <select class="form-control" id="tipo-rn" name="tipo-rn">
+            <option value="op0r">Elige opción</option>
+            <option value="op1r">FUENTES SÓLIDAS</option>
+            <option value="op2r">FUENTES LÍQUIDAS</option>
+            </select>
+        </div>
+      </div>
+    </div>
+      <!-- START OPCION -->
+      <!-- Campos adicionales específicos para la opción op1c -->
+      <div class="form-group bordered-group" id="campos-op1c" style="display: none;">
+        <h5>CALIBRACIÓN DE EQUIPO EN RADIACCIÓN GAMMA</h5>
+        <h6>Solo para equipos con escalas graduadas en submúltiplos de Sv/h, Gy/h, R/h / Sv, Gy, R.</h6>
+        <div class="inline-group">
+          <div class="quarter-width">
+            <label for="marca">Marca</label>
+            <input type="text" class="form-control" id="marca" name="marca">
+          </div>
+          <div class="quarter-width">
+            <label for="modelo">Modelo</label>
+            <input type="text" class="form-control" id="modelo" name="modelo">
+          </div>
+          <div class="quarter-width">
+            <label for="numero-serie">Número de Serie</label>
+            <input type="text" class="form-control" id="numero-serie" name="numero-serie">
+          </div>
+          <div class="quarter-width">
+            <label for="calidad-iso">Calidad ISO de radiación</label>
+            <select class="form-control" id="calidad-iso" name="calidad-iso">
+              <option value="">Elige opción</option>
+              <option value="Cs-137">Cs-137</option>
+              <option value="Co-60">Co-60</option>
+            </select>
+          </div>
+          <div class="form-buttons">
+            <button type="button" class="btn btn-success" id="validate-button" onclick="validateEquipment(this)">Validar equipo</button>
+            <button type="button" class="btn btn-primary" id="add-button" disabled onclick="addEquipment(this)">Añadir otro equipo</button>            
+            <button type="button" class="btn btn-danger" id="remove-equipment" onclick="removeEquipment(this)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+      <script>
+        function addEquipment() {
+          let original = document.getElementById('campos-op1c');
+          let clone = original.cloneNode(true); // Clona el equipo
+          clone.id = ''; // Cambia el ID o lo deja en blanco si es necesario
+          original.parentNode.appendChild(clone);
+        
+          // Opcional: Esconder el botón de añadir en el primer equipo
+          document.getElementById('add-equipment').style.display = 'none';
+        }
+        
+        function removeEquipment(button) {
+            let parentDiv = button.closest('.form-group'); // Encuentra el elemento form-group más cercano
+            parentDiv.remove(); // Elimina el bloque completo
+        }
+      </script>
+      <!-- FIN OPCION-->
+      <!-- START OPCION -->
+      <!-- Campos adicionales específicos para la opción op2c -->
+      <div class="form-group bordered-group" id="campos-op2c" style="display: none;">
+        <h5>CALIBRACIÓN DE EQUIPO CON RAYOS X</h5>
+        <h6>Solo para equipos con escalas graduadas en submúltiplos de Sv/h, Gy/h, R/h / Sv, Gy, R.</h6>
+        <div class="inline-group">
+          <div class="quarter-width">
+            <label for="marcarx">Marca</label>
+            <input type="text" class="form-control" id="marcarx" name="marcarx">
+          </div>
+          <div class="quarter-width">
+            <label for="modelorx">Modelo</label>
+            <input type="text" class="form-control" id="modelorx" name="modelorx">
+          </div>
+          <div class="quarter-width">
+            <label for="numero-serierx">Número de Serie</label>
+            <input type="text" class="form-control" id="numero-serierx" name="numero-serierx">
+          </div>
+          <div class="quarter-width">
+            <label for="calidad-isorx">Calidad ISO de radiación o Tensión de pico</label>
+            <select class="form-control" id="calidad-isorx" name="calidad-isorx">
+              <option value="">Elige opción</option>
+              <option value="N-10">N-10</option>
+              <option value="N-15">N-15</option>
+              <option value="N-20">N-20</option>
+              <option value="N-25">N-25</option>
+              <option value="N-30">N-30</option>
+              <option value="N-40">N-40</option>
+              <option value="N-60">N-60</option>
+              <option value="N-80">N-80</option>
+              <option value="N-100">N-100</option>
+              <option value="N-120">N-120</option>
+              <option value="N-150">N-150</option>
+              <option value="N-200">N-200</option>
+              <option value="N-250">N-250</option>
+              <option value="N-300">N-300</option>
+              <option value="L-10">L-10</option>
+              <option value="L-20">L-20</option>
+              <option value="L-30">L-30</option>
+              <option value="L-35">L-35</option>
+              <option value="L-55">L-55</option>
+              <option value="L-70">L-70</option>
+              <option value="L-100">L-100</option>
+              <option value="L-125">L-125</option>
+              <option value="L-170">L-170</option>
+              <option value="L-210">L-210</option>
+              <option value="L-240">L-240</option>
+              <option value="W-60">W-60</option>
+              <option value="W-80">W-80</option>
+              <option value="W-110">W-110</option>
+              <option value="W-150">W-150</option>
+              <option value="W-200">W-200</option>
+              <option value="W-250">W-250</option>
+              <option value="W-300">W-300</option>
+              <option value="Verpico">Verificación de la medida de tensión de pico</option>
+            </select>
+          </div>
+          <div class="form-buttons">
+            <button type="button" class="btn btn-success" id="validate-button" onclick="validateEquipmentrx(this)">Validar equipo</button>
+            <button type="button" class="btn btn-primary" id="add-equipmentrx" onclick="addEquipmentrx()">Añadir otro equipo</button>
+            <button type="button" class="btn btn-danger" id="remove-equipmentrx" onclick="removeEquipmentrx(this)">Eliminar</button>
+          </div>
+        
+      </div>
+      <script>
+        // Función para añadir equipos de rayos X
+        function addEquipmentrx() {
+          let original = document.getElementById('campos-op2c');
+          let clone = original.cloneNode(true); // Clona el equipo
+          let newId = 'campos-op2c' + new Date().getTime(); // Crea un nuevo ID único
+          clone.id = newId;
+          original.parentNode.appendChild(clone);
+      
+          // Actualizar los IDs de los botones y reasignar eventos en el clon
+          let addButton = clone.querySelector('#add-equipmentrx');
+          addButton.id = 'add-equipmentrx' + new Date().getTime();
+          addButton.onclick = addEquipmentrx; // Reasigna el evento onclick
+      
+          let removeButton = clone.querySelector('#remove-equipmentrx');
+          removeButton.onclick = function() { removeEquipmentrx(this); }; // Reasigna el evento onclick
+      
+          // Opcional: Esconder el botón de añadir en el primer equipo
+          original.querySelector('#add-equipmentrx').style.display = 'none';
+        }      
+        // Función para eliminar equipos de rayos X
+        function removeEquipmentrx(button) {
+          let parentDiv = button.closest('.form-group'); // Encuentra el elemento form-group más cercano
+          parentDiv.remove(); // Elimina el bloque completo
+        }
+      </script>      
+      <!-- FIN OPCION-->       
+      <!-- Campos adicionales específicos para la opción op1d -->
+      <div class="form-group bordered-group" id="campos-op1d" style="display: none;">
+        <h5>ASIGNACIÓN DE DOSIS EN RADIACCIÓN GAMMA</h5>
+        <div class="inline-group">
+          <div class="quarter-width">
+            <label for="ndg">Número de dosímetros</label>
+            <input type="text" class="form-control" id="ndg" name="ndg">
+          </div>
+          <div class="quarter-width">
+            <label for="marmod">Marca/Modelo</label>
+            <input type="text" class="form-control" id="marmod" name="marmod">
+          </div>
+          <div class="quarter-width">
+            <label for="calidad-iso">Calidad ISO de radiación</label>
+            <select class="form-control" id="calidad-iso" name="calidad-iso">
+              <option value="">Elige opción</option>
+              <option value="Cs-137">Cs-137</option>
+              <option value="Co-60">Co-60</option>
+            </select>
+          </div>
+          <div class="quarter-width">
+            <label for="equivdosis">Equivalente de dosis</label>
+            <select class="form-control" id="equivdosis" name="equivdosis">
+              <option value="">Elige opción</option>
+              <option value="Hp10">PERSONAL Hp(10)</option>
+              <option value="Hp007">PERSONAL Hp(0,07)</option>
+              <option value="Hp3">PERSONAL Hp(3)</option>
+              <option value="Ha10">AMBIENTAL H*(10)</option>
+            </select>
+          </div>
+          <div class="quarter-width">
+            <label for="valordosis">Valor de dosis a asignar (mSv)</label>
+            <input type="text" class="form-control" id="valordosis" name="valordosis">
+          </div>
+          <div class="form-buttons">
+            <button type="button" class="btn btn-success" id="validate-button" onclick="validateEquipmentdose(this)">Validar equipo</button>
+            <button type="button" class="btn btn-primary" id="add-dose" onclick="addDose()">Añadir otro equipo</button>
+            <button type="button" class="btn btn-danger" id="remove-dose" onclick="removeDose(this)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Botón para regresar a la pestaña de Datos Generales -->
+    <!--<button id="regresar-datos" type="button" class="btn btn-secondary mt-2">Regresar</button>-->
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      function validateEquipment(button) {
+            let parentGroup = button.closest('.form-group');
+            let inputs = parentGroup.querySelectorAll('input[type="text"], select');
+            let allFilled = true;
+            
+            inputs.forEach(input => {
+                if (input.value === '') {
+                    allFilled = false;
+                    input.classList.add('is-invalid'); // Marca los campos no llenos
+                } else {
+                    input.classList.remove('is-invalid'); // Quita la marca si el campo está lleno
+                }
+            });
+
+            let addButton = parentGroup.querySelector('#add-button');
+            let validateButton = parentGroup.querySelector('#validate-button');
+
+            if (allFilled) {
+                addButton.disabled = false; // Habilita el botón de añadir
+                validateButton.disabled = true; // Deshabilita el botón de validar
+            } else {
+                alert('Por favor, rellena todos los campos obligatorios antes de validar.');
+                addButton.disabled = true; // Asegura que el botón de añadir siga deshabilitado si la validación falla
+            }
+        }
+
+        function validateEquipmentrx(button) {
+            let parentGroup = button.closest('.form-group');
+            let inputs = parentGroup.querySelectorAll('input[type="text"], select');
+            let allFilled = true;
+            
+            inputs.forEach(input => {
+                if (input.value === '') {
+                    allFilled = false;
+                    input.classList.add('is-invalid'); // Marca los campos no llenos
+                } else {
+                    input.classList.remove('is-invalid'); // Quita la marca si el campo está lleno
+                }
+            });
+
+            let addButton = parentGroup.querySelector('#add-equipmentrx');
+            let validateButton = parentGroup.querySelector('#validate-button');
+
+            if (allFilled) {
+                addButton.disabled = false; // Habilita el botón de añadir
+                validateButton.disabled = true; // Deshabilita el botón de validar
+            } else {
+                alert('Por favor, rellena todos los campos obligatorios antes de validar.');
+                addButton.disabled = true; // Asegura que el botón de añadir siga deshabilitado si la validación falla
+            }
+        }
+
+        function validateEquipmentdose(button) {
+            let parentGroup = button.closest('.form-group');
+            let inputs = parentGroup.querySelectorAll('input[type="text"], select');
+            let allFilled = true;
+            
+            inputs.forEach(input => {
+                if (input.value === '') {
+                    allFilled = false;
+                    input.classList.add('is-invalid'); // Marca los campos no llenos
+                } else {
+                    input.classList.remove('is-invalid'); // Quita la marca si el campo está lleno
+                }
+            });
+
+            let addButton = parentGroup.querySelector('#add-dose');
+            let validateButton = parentGroup.querySelector('#validate-button');
+
+            if (allFilled) {
+                addButton.disabled = false; // Habilita el botón de añadir
+                validateButton.disabled = true; // Deshabilita el botón de validar
+            } else {
+                alert('Por favor, rellena todos los campos obligatorios antes de validar.');
+                addButton.disabled = true; // Asegura que el botón de añadir siga deshabilitado si la validación falla
+            }
+        }
+
+      // Función para clonar campos de calibración de Gamma (op1c)
+      function cloneGammaCalibrationFields() {
+            let original = document.getElementById('campos-op1c');
+            let clone = original.cloneNode(true);
+            let newIdSuffix = new Date().getTime();
+            clone.id = 'campos-op1c' + newIdSuffix;
+            clone.style.display = '';
+
+            let validateButton = clone.querySelector('#validate-button');
+            validateButton.onclick = function() { validateEquipment(this); };
+
+            let addButton = clone.querySelector('#add-button');
+            addButton.disabled = true; // Asegura que el botón de añadir esté deshabilitado inicialmente
+            addButton.onclick = function() { cloneGammaCalibrationFields(); };
+
+            let removeButton = clone.querySelector('#remove-equipment');
+            removeButton.onclick = function() { removeEquipment(this); };
+
+            original.parentNode.appendChild(clone);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+  
+      // Función para clonar campos de calibración de Rayos X (op2c)
+      function cloneXrayCalibrationFields() {
+            let original = document.getElementById('campos-op2c');
+            let clone = original.cloneNode(true);
+            let newIdSuffix = new Date().getTime();
+            clone.id = 'campos-op2c' + newIdSuffix;
+            clone.style.display = '';
+
+            let validateButton = clone.querySelector('#validate-button');
+            validateButton.onclick = function() { validateEquipmentrx(this); };
+
+            let addButton = clone.querySelector('#add-button');
+            addButton.disabled = true; // Asegura que el botón de añadir esté deshabilitado inicialmente
+            addButton.onclick = function() { cloneXrayCalibrationFields(); };
+
+            let removeButton = clone.querySelector('#remove-equipment');
+            removeButton.onclick = function() { removeEquipment(this); };
+
+            original.parentNode.appendChild(clone);
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+  
+      // Función para clonar campos de asignación de dosis (op1d)
+      function cloneDoseAssignmentFields() {
+        let original = document.getElementById('campos-op1d');
+        let clone = original.cloneNode(true);
+        let newIdSuffix = new Date().getTime();
+        clone.id = 'campos-op1d' + newIdSuffix;
+        clone.style.display = '';
+
+        let validateButton = clone.querySelector('#validate-button');
+        validateButton.onclick = function() { validateEquipmentdose(this); };
+
+        let addButton = clone.querySelector('#add-dose');
+        addButton.disabled = true;
+        addButton.onclick = function() { cloneDoseAssignmentFields(); };
+  
+        let removeButton = clone.querySelector('#remove-dose');
+        removeButton.onclick = function() { removeEquipment(this); };
+  
+        original.parentNode.appendChild(clone);
+        window.scrollTo(0, document.body.scrollHeight);
+      }
+  
+      // Escucha cambios en selector de calibración y dosis
+      $('#tipo-calibracion, #tipo-dosis').change(function() {
+        switch (this.id) {
+          case 'tipo-calibracion':
+            if (this.value === 'op1c') {
+              cloneGammaCalibrationFields();
+            } else if (this.value === 'op2c') {
+              cloneXrayCalibrationFields();
+            }
+            break;
+          case 'tipo-dosis':
+            if (this.value === 'op1d') {
+              cloneDoseAssignmentFields();
+            }
+            break;
+        }
+      });
+  
+      // Función genérica para eliminar equipos
+      window.removeEquipment = function(button) {
+        let parentDiv = button.closest('.form-group');
+        parentDiv.remove();
+      };
+  
+      // Manejo del botón para cambiar de formulario
+      $(document).on('click', '#activar-equipos', function() {
+        $('#equipos-tab').removeClass('disabled');
+        $('a[href="#equipos"]').tab('show');
+      });
+    });
+  </script>
+  
+  
+</body>
+</html>
